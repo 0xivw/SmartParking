@@ -23,7 +23,9 @@ import com.squareup.moshi.Json
  * The property names of this data class are used by Moshi to match the names of values in JSON.
  */
 data class MarsPhoto(
-        val id: String,
-        // used to map img_src from the JSON to imgSrcUrl in our class
-        @Json(name = "img_src") val imgSrcUrl: String
+        @Json(name = "name") val name: String,
+        @Json(name = "address") val address: String,
+        @Json(name = "avail_no") val avalCarPosition: Int,
+        @Json(name = "avail_no1") val avalMotorPosition: Int,
+        @Json(name = "distance") val distance: Double
 )

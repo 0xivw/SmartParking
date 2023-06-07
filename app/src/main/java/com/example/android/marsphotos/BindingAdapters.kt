@@ -18,6 +18,7 @@ package com.example.android.marsphotos
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -70,4 +71,10 @@ fun bindStatus(statusImageView: ImageView, status: MarsApiStatus) {
             statusImageView.visibility = View.GONE
         }
     }
+}
+
+@BindingAdapter("android:text")
+fun setDoubleText(view: TextView, value: Double) {
+    val text = value.toString()
+    view.text = text
 }
