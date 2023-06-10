@@ -19,6 +19,7 @@ package com.example.android.marsphotos
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
@@ -33,5 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO);
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FEFEFE")))
+        supportActionBar!!.setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.app_name)))
     }
 }
