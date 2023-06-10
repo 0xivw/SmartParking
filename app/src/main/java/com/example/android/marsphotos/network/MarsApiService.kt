@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
+private const val BASE_URL = "https://a299-115-76-61-61.ngrok-free.app//"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -50,7 +50,7 @@ interface MarsApiService {
      * The @GET annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
-    @GET("photos")
+    @GET("get-all-parking")
     suspend fun getPhotos(): List<MarsPhoto>
 }
 

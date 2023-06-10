@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos
 
+import android.graphics.Rect
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -78,3 +79,28 @@ fun setDoubleText(view: TextView, value: Double) {
     val text = value.toString()
     view.text = text
 }
+
+@BindingAdapter("android:text")
+fun setIntText(view: TextView, value: Int) {
+    val text = value.toString()
+    view.text = text
+}
+
+object ItemMarginBindingAdapter {
+    @JvmStatic
+    @BindingAdapter("itemMargin")
+    fun setItemMargin(recyclerView: RecyclerView, margin: Int) {
+        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                super.getItemOffsets(outRect, view, parent, state)
+                outRect.bottom = margin
+            }
+        })
+    }
+}
+

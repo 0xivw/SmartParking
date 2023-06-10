@@ -16,8 +16,12 @@
 
 package com.example.android.marsphotos
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 
 /**
  * MainActivity sets the content view activity_main, a fragment container that contains
@@ -27,5 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO);
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FEFEFE")))
     }
 }
