@@ -16,24 +16,54 @@
 
 package com.example.android.marsphotos
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.widget.Toolbar
+import com.example.android.marsphotos.overview.LoginFragment
 
 /**
  * MainActivity sets the content view activity_main, a fragment container that contains
  * overviewFragment.
  */
 class MainActivity : AppCompatActivity() {
+    private lateinit var imvLogin: ImageView
+    private lateinit var toolbar: Toolbar
+    private lateinit var tvTitle: TextView
+    private lateinit var imvLeftButton: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO);
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FEFEFE")))
-        supportActionBar!!.setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.app_name)))
+        toolbar = findViewById(R.id.toolbar)
+        imvLogin = findViewById(R.id.imv_right_icon)
+        imvLeftButton = findViewById(R.id.imv_left_icon)
+        tvTitle = findViewById(R.id.tv_title)
+        setSupportActionBar(toolbar)
+        val fragment = LoginFragment()
+        imvLogin?.setOnClickListener(View.OnClickListener {
+            supportFragmentManager!!.beginTransaction()
+                .replace(R.id.overviewFragment, fragment)
+                .addToBackStack(null)
+                .commit()
+        })
+    }
+
+    public fun changeHeader(leftIcon: Boolean, title: String?, rightIcon: Boolean) {
+        if (!leftIcon) {
+            imvLeftButton.visibility = View.GONE
+        } else {
+            imvLeftButton.visibility = View.VISIBLE
+        }
+        tvTitle.text = title
+        if (!rightIcon) {
+            imvLogin.visibility = View.GONE
+        } else {
+            imvLogin.visibility = View.VISIBLE
+        }
     }
 }
