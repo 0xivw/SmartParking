@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -63,6 +64,7 @@ class OverviewViewModel : ViewModel() {
                 _photos.value = MarsApi.retrofitService.getPhotos()
                 _status.value = MarsApiStatus.DONE
             } catch (e: Exception) {
+                Log.d("TAG", "getMarsPhotos: 14-06 huhhuhuhu " + e)
                 _status.value = MarsApiStatus.ERROR
                 _photos.value = listOf()
             }

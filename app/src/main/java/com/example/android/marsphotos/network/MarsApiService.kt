@@ -18,11 +18,13 @@ package com.example.android.marsphotos.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
+import retrofit2.http.*
+import java.net.Authenticator
 
-private const val BASE_URL = "https://0b06-2402-800-3b62-6aca-fc13-9309-af96-d424.ngrok-free.app/"
+private const val BASE_URL = "https://e271-2402-800-61cb-e83b-7c2f-4a95-533-91b5.ngrok-free.app/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -52,6 +54,10 @@ interface MarsApiService {
      */
     @GET("get-all-parking")
     suspend fun getPhotos(): List<MarsPhoto>
+    @FormUrlEncoded
+    @POST("login-user")
+    suspend fun login(@Field("username") username: String?,
+                      @Field("password") password: String?) : Response<Int>
 }
 
 /**

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.android.marsphotos.overview.AccountViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,6 +44,7 @@
             android:hint="Username"
             android:inputType="textPersonName"
             android:textSize="18dp"
+            android:text="@{viewModel.account}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -54,6 +57,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPersonName"
+            android:text="@{viewModel.password}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_user_name" />
