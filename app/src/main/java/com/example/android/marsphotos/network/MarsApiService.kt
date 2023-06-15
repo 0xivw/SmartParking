@@ -58,6 +58,11 @@ interface MarsApiService {
     @POST("login-user?")
     suspend fun login(@Field("username") username: String?,
                       @Field("password") password: String?) : Response<JwtData>
+
+    @FormUrlEncoded
+    @POST("signup-user?")
+    suspend fun signUp(@Field("username") username: String?,
+                      @Field("password") password: String?) : Response<SignUpData>
 }
 
 /**

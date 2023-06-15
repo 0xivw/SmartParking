@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class LoginFragment : Fragment() {
-    private val viewModel : AccountViewModel by viewModels()
+    private val viewModel: AccountViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,8 @@ class LoginFragment : Fragment() {
     private fun onLogin() {
         val account = binding.edtUserName.text.toString()
         val password = binding.edtPassword.text.toString()
-        viewModel.onPressButton(account, password)
+        val isSignUp = binding.cbSignUp.isChecked
+        viewModel.onPressButton(context, account, password, isSignUp)
     }
 
 }
