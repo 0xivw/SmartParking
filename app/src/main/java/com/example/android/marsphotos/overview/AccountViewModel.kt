@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.marsphotos.network.JwtData
 import com.example.android.marsphotos.network.MarsApi
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -28,8 +29,9 @@ class AccountViewModel : ViewModel() {
         viewModelScope.launch{
             try {
                 Log.d("TAG", "onPressButton: 14-06 " + user + " " + password)
-                val status : Response<Int> = MarsApi.retrofitService.login(user, password)
-                Log.d("TAG", "onPressButton: hihihihih " + status)
+                val status : Response<JwtData> = MarsApi.retrofitService.login(user, password)
+                val jwt = status.body()
+                Log.d("TAG", "onPressButton: hihihihih " + jwt?.token)
             } catch (e : java.lang.Exception) {
                 Log.d("TAG", "onPressButton: huhuhuuh " + e)
             }

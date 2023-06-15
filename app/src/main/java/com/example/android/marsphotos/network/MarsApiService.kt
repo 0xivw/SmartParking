@@ -24,7 +24,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.net.Authenticator
 
-private const val BASE_URL = "https://e271-2402-800-61cb-e83b-7c2f-4a95-533-91b5.ngrok-free.app/"
+private const val BASE_URL = "https://dca6-117-0-133-126.ngrok-free.app/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -55,9 +55,9 @@ interface MarsApiService {
     @GET("get-all-parking")
     suspend fun getPhotos(): List<MarsPhoto>
     @FormUrlEncoded
-    @POST("login-user")
+    @POST("login-user?")
     suspend fun login(@Field("username") username: String?,
-                      @Field("password") password: String?) : Response<Int>
+                      @Field("password") password: String?) : Response<JwtData>
 }
 
 /**
