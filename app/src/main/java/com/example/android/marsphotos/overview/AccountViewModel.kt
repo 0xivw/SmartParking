@@ -30,6 +30,10 @@ class AccountViewModel : ViewModel() {
     val isSignUp: MutableLiveData<Boolean>
         get() = _isSignUp
 
+    private val _isLoginSuccess = MutableLiveData<Boolean>()
+    val isLoginSuccess: MutableLiveData<Boolean>
+        get() = _isLoginSuccess
+
     init {
 
     }
@@ -43,16 +47,18 @@ class AccountViewModel : ViewModel() {
                     Log.d("TAG", "onPressButton: 14-06 " + user + " " + password)
                     val status: Response<JwtData> = MarsApi.retrofitService.login(user, password)
                     val jwt = status.body()
-                    if (status.isSuccessful) {
-                        Toast.makeText(context, "Login successfully", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
-                    }
                     sharedPreferencesHelper.saveString("token", jwt?.token)
                     val token :String? = jwt?.token
                     Constant.JWT_TOKEN = token
                     Log.d("TAG", "onPressButton: hihihihih " + jwt?.token)
-                    val ticket = TicketData("1234", "17B11", "motor", "vuduc", "Truong Dinh Parking", "2023-05-01")
+                    if (status.isSuccessful) {
+                        Toast.makeText(context, "Login successfully", Toast.LENGTH_SHORT).show()
+                        isLoginSuccess.value = true
+                    } else {
+                        Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                        isLoginSuccess.value = false
+                    }
+                    /*val ticket = TicketData("1234", "17B11", "motor", "vuduc", "Truong Dinh Parking", "2023-05-01")
                     viewModelScope.launch {
                         try {
                             val status1: Response<List<TicketData>> = MarsApi.retrofitService.getTicket("vuduc")
@@ -65,10 +71,11 @@ class AccountViewModel : ViewModel() {
                         } catch (e: java.lang.Exception) {
                             Log.d("TAG", "send ticket : hhuhuhu " + e)
                         }
-                    }
+                    }*/
                 } catch (e: java.lang.Exception) {
                     Log.d("TAG", "onPressButton: huhuhuuh " + e)
                     Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                    isLoginSuccess.value = false
                 }
             }
         } else {
@@ -79,12 +86,15 @@ class AccountViewModel : ViewModel() {
                     val jwt = status.body()
                     if (status.isSuccessful) {
                         Toast.makeText(context, "Register successfully", Toast.LENGTH_SHORT).show()
+                        isLoginSuccess.value = true
                     } else {
                         Toast.makeText(context, "Register failed", Toast.LENGTH_SHORT).show()
+                        isLoginSuccess.value = false
                     }
                 } catch (e: java.lang.Exception) {
                     Log.d("TAG", "onPressButton:  resgister huhuhuuh " + e)
                     Toast.makeText(context, "Register failed", Toast.LENGTH_SHORT).show()
+                    isLoginSuccess.value = false
                 }
             }
         }

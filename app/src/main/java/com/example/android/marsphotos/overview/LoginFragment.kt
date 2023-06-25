@@ -32,6 +32,20 @@ class LoginFragment : Fragment() {
             activity.changeHeader(true, null, false)
         }
         binding.textView3.setOnClickListener(View.OnClickListener { onLogin() })
+        viewModel.isLoginSuccess.observe(
+            /* owner = */
+            viewLifecycleOwner,
+        )
+        /* observer = */
+        { success ->
+            if (success) {
+                val overviewFragment = OverviewFragment.newInstance(true, viewModel.account.value.toString())
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.overviewFragment, overviewFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
         return binding.root
     }
 

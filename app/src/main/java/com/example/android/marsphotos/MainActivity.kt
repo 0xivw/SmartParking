@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -66,4 +67,10 @@ class MainActivity : AppCompatActivity() {
             imvLogin.visibility = View.VISIBLE
         }
     }
+    fun setLeftIcon(icon: Drawable?) {
+        if (imvLeftButton.visibility == View.VISIBLE) {
+            imvLeftButton.setImageDrawable(icon)
+        }
+    }
+
 }
