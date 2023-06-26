@@ -18,24 +18,32 @@ package com.example.android.marsphotos
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.android.marsphotos.overview.LoginFragment
+import com.example.android.marsphotos.overview.OverviewFragment
+import com.google.android.material.navigation.NavigationView
 
 /**
  * MainActivity sets the content view activity_main, a fragment container that contains
  * overviewFragment.
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var imvLogin: ImageView
     private lateinit var toolbar: Toolbar
     private lateinit var tvTitle: TextView
     private lateinit var imvLeftButton: ImageView
+    private lateinit var navigationView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,7 +52,8 @@ class MainActivity : AppCompatActivity() {
         imvLogin = findViewById(R.id.imv_right_icon)
         imvLeftButton = findViewById(R.id.imv_left_icon)
         tvTitle = findViewById(R.id.tv_title)
-        setSupportActionBar(toolbar)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        //setSupportActionBar(toolbar)
         val fragment = LoginFragment()
         imvLogin?.setOnClickListener(View.OnClickListener {
             supportFragmentManager!!.beginTransaction()
@@ -52,6 +61,37 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         })
+        navigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
+
+        imvLeftButton.setOnClickListener(View.OnClickListener { view ->
+            // Do some work here
+            drawerLayout.openDrawer(GravityCompat.START)
+        })
+/*
+
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_nav,
+            R.string.close_nav
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.overviewFragment, OverviewFragment())
+                .commit()
+            navigationView.setCheckedItem(R.id.nav_add_ticket)
+        }*/
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        /*when (item.itemId) {
+
+        }*/
+        return true
     }
 
     public fun changeHeader(leftIcon: Boolean, title: String?, rightIcon: Boolean) {
@@ -67,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             imvLogin.visibility = View.VISIBLE
         }
     }
+
     fun setLeftIcon(icon: Drawable?) {
         if (imvLeftButton.visibility == View.VISIBLE) {
             imvLeftButton.setImageDrawable(icon)
