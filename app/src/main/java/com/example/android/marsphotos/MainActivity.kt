@@ -16,22 +16,33 @@
 
 package com.example.android.marsphotos
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.android.marsphotos.overview.AddTicketFragment
 import com.example.android.marsphotos.overview.LoginFragment
 import com.example.android.marsphotos.overview.OverviewFragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 
 /**
@@ -45,6 +56,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var imvLeftButton: ImageView
     private lateinit var navigationView: NavigationView
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var longtitude: Double = 0.0
+    private var latitude: Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -69,6 +83,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // Do some work here
             drawerLayout.openDrawer(GravityCompat.START)
         })
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        getCurrentLocation()
 /*
 
         val toggle = ActionBarDrawerToggle(
@@ -90,7 +107,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_add_ticket -> AddTicketFragment().show(supportFragmentManager, AddTicketFragment.TAG)
+            R.id.nav_add_ticket -> AddTicketFragment().show(
+                supportFragmentManager,
+                AddTicketFragment.TAG
+            )
         }
         return true
     }
@@ -113,6 +133,79 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (imvLeftButton.visibility == View.VISIBLE) {
             imvLeftButton.setImageDrawable(icon)
         }
+    }
+
+    private fun getCurrentLocation() {
+        if (checkPermission()) {
+            if (isLocationEnable()) {
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) {task ->
+                    val location: Location? = task.result
+                    if (location == null) {
+                        Toast.makeText(this, "Null Received", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Get success", Toast.LENGTH_SHORT).show()
+                        Log.d("TAG", "getCurrentLocation: latityde " + location.latitude + " longtitude " + location.longitude)
+                    }
+
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            PERMISSION_REQUEST_ACCESS_LOCATION
+        )
+    }
+
+    companion object {
+        private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
+    }
+
+    private fun checkPermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(applicationContext, "Granted", Toast.LENGTH_SHORT).show()
+                getCurrentLocation()
+            } else {
+                Toast.makeText(applicationContext, "Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun isLocationEnable() : Boolean {
+        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
 }
