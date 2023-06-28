@@ -41,7 +41,7 @@ private const val HEADER = "HEADER"
 /**
  * This fragment shows the the status of the Mars photos web services transaction.
  */
-class OverviewFragment : Fragment() {
+class OverviewFragment : Fragment(), PhotoGridAdapter.OnMapAction {
 
     private val viewModel: OverviewViewModel by viewModels()
     private var isLoginSuccess: Boolean? = null
@@ -90,7 +90,7 @@ class OverviewFragment : Fragment() {
         binding.viewModel = viewModel
 
         // Sets the adapter of the photosGrid RecyclerView
-        binding.photosGrid.adapter = PhotoGridAdapter()
+        binding.photosGrid.adapter = PhotoGridAdapter(this)
 
         llButton = binding.llButton
         llButton.setOnClickListener() {
@@ -106,15 +106,16 @@ class OverviewFragment : Fragment() {
         return binding.root
     }
 
-    /*fun openGoogleMaps(latitude: Double, longitude: Double) {
+    override fun onAction(longitude: Double, latitude: Double) {
         val uri = Uri.parse("geo:$latitude,$longitude")
         val mapIntent = Intent(Intent.ACTION_VIEW, uri)
         mapIntent.setPackage("com.google.android.apps.maps")
 
         // Verify that the Maps app is installed on the device
-        if (mapIntent.resolveActivity(packageManager) != null) {
+        if (context?.let { mapIntent.resolveActivity(it.packageManager) } != null) {
             startActivity(mapIntent)
         }
-    }*/
+    }
+
 
 }

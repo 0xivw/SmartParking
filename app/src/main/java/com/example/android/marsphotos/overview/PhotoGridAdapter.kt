@@ -18,6 +18,7 @@ package com.example.android.marsphotos.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +29,7 @@ import com.example.android.marsphotos.network.MarsPhoto
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class PhotoGridAdapter :
+class PhotoGridAdapter(private val itemClickListener: OnMapAction):
     ListAdapter<MarsPhoto, PhotoGridAdapter.MarsPhotosViewHolder>(DiffCallback) {
 
     /**
@@ -38,11 +39,14 @@ class PhotoGridAdapter :
     class MarsPhotosViewHolder(
         private var binding: GridViewItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        var mapMe : ImageView = binding.imvMap
         fun bind(marsPhoto: MarsPhoto) {
             binding.parking = marsPhoto
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
+
+            mapMe = binding.imvMap
         }
     }
 
@@ -78,5 +82,12 @@ class PhotoGridAdapter :
     override fun onBindViewHolder(holder: MarsPhotosViewHolder, position: Int) {
         val marsPhoto = getItem(position)
         holder.bind(marsPhoto)
+        holder.mapMe.setOnClickListener {
+            itemClickListener.onAction(marsPhoto.longitude, marsPhoto.latitude)
+        }
+    }
+
+    interface OnMapAction {
+        fun onAction(longtitude: Double, latitude: Double)
     }
 }
