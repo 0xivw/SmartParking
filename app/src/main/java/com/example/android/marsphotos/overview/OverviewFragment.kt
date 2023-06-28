@@ -16,16 +16,26 @@
 
 package com.example.android.marsphotos.overview
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.databinding.FragmentOverviewBinding
+import com.example.android.marsphotos.network.MarsApi
+import com.example.android.marsphotos.network.YourLocation
+import kotlinx.coroutines.launch
+
 private const val IS_LOGIN = "IS_LOGIN"
 private const val HEADER = "HEADER"
 /**
@@ -36,6 +46,7 @@ class OverviewFragment : Fragment() {
     private val viewModel: OverviewViewModel by viewModels()
     private var isLoginSuccess: Boolean? = null
     private var headerName: String? = null
+    private lateinit var llButton: LinearLayout
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -81,6 +92,12 @@ class OverviewFragment : Fragment() {
         // Sets the adapter of the photosGrid RecyclerView
         binding.photosGrid.adapter = PhotoGridAdapter()
 
+        llButton = binding.llButton
+        llButton.setOnClickListener() {
+            val location : YourLocation = (activity as MainActivity).getYourLocation()
+            viewModel.getNearLocation(location.longtitude, location.latitude)
+        }
+
         if (isLoginSuccess == true) {
             (activity as MainActivity).changeHeader(true, headerName, false)
             (activity as MainActivity).setLeftIcon(context?.let { getDrawable(it, R.drawable.ic_menu) })
@@ -88,4 +105,16 @@ class OverviewFragment : Fragment() {
 
         return binding.root
     }
+
+    /*fun openGoogleMaps(latitude: Double, longitude: Double) {
+        val uri = Uri.parse("geo:$latitude,$longitude")
+        val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        // Verify that the Maps app is installed on the device
+        if (mapIntent.resolveActivity(packageManager) != null) {
+            startActivity(mapIntent)
+        }
+    }*/
+
 }

@@ -38,12 +38,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.viewModelScope
+import com.example.android.marsphotos.network.MarsApi
+import com.example.android.marsphotos.network.YourLocation
 import com.example.android.marsphotos.overview.AddTicketFragment
 import com.example.android.marsphotos.overview.LoginFragment
+import com.example.android.marsphotos.overview.MarsApiStatus
 import com.example.android.marsphotos.overview.OverviewFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.launch
 
 /**
  * MainActivity sets the content view activity_main, a fragment container that contains
@@ -145,6 +150,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     } else {
                         Toast.makeText(this, "Get success", Toast.LENGTH_SHORT).show()
                         Log.d("TAG", "getCurrentLocation: latityde " + location.latitude + " longtitude " + location.longitude)
+                        longtitude = location.longitude
+                        latitude = location.latitude
                     }
 
                 }
@@ -156,6 +163,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             requestPermissions()
         }
+    }
+
+    fun getYourLocation() : YourLocation {
+        return YourLocation(longtitude, latitude)
     }
 
     private fun requestPermissions() {

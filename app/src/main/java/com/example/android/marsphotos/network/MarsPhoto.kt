@@ -27,6 +27,7 @@ data class MarsPhoto(
         @Json(name = "parking_address") val address: String,
         @Json(name = "capacity_car") val avalCarPosition: Int,
         @Json(name = "capacity_motor") val avalMotorPosition: Int,
-        @Json(name = "longitude") val longitude: Double,
-        @Json(name = "latitude") val latitude: Double
+        @Json(name = "longtitude") val longitude: Double,
+        @Json(name = "latitude") val latitude: Double,
+        @Json(name = "distance") val distance: Double
 )

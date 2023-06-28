@@ -70,4 +70,19 @@ class OverviewViewModel : ViewModel() {
             }
         }
     }
+
+    fun getNearLocation(longtitude : Double, latitude : Double) {
+
+        viewModelScope.launch {
+            _status.value = MarsApiStatus.LOADING
+            try {
+                _photos.value = MarsApi.retrofitService.getNearLocation(longtitude, latitude)
+                _status.value = MarsApiStatus.DONE
+            } catch (e: Exception) {
+                Log.d("TAG", "getNearLocation: 28-06 huhhuhuhu " + e)
+                _status.value = MarsApiStatus.ERROR
+                _photos.value = listOf()
+            }
+        }
+    }
 }

@@ -69,22 +69,33 @@ interface MarsApiService {
      */
     @GET("get-all-parking")
     suspend fun getPhotos(): List<MarsPhoto>
+
+    @GET("get-sort-distance")
+    suspend fun getNearLocation(
+        @Query("longtitude") longtitude: Double?,
+        @Query("latitude") latitude: Double?
+    ): List<MarsPhoto>
+
     @FormUrlEncoded
     @POST("login-user?")
-    suspend fun login(@Field("username") username: String?,
-                      @Field("password") password: String?) : Response<JwtData>
+    suspend fun login(
+        @Field("username") username: String?,
+        @Field("password") password: String?
+    ): Response<JwtData>
 
     @FormUrlEncoded
     @POST("signup-user?")
-    suspend fun signUp(@Field("username") username: String?,
-                      @Field("password") password: String?) : Response<SignUpData>
+    suspend fun signUp(
+        @Field("username") username: String?,
+        @Field("password") password: String?
+    ): Response<SignUpData>
 
     @POST("post_month_ticket")
     suspend fun addTicket(@Body requestBody: TicketData): Response<TicketData>
 
 
     @GET("get_month_ticket")
-    suspend fun getTicket(@Query("username")username: String?): Response<List<TicketData>>
+    suspend fun getTicket(@Query("username") username: String?): Response<List<TicketData>>
 }
 
 /**
