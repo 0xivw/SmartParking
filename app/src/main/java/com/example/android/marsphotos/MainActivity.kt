@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.android.marsphotos.overview.AddTicketFragment
 import com.example.android.marsphotos.overview.LoginFragment
 import com.example.android.marsphotos.overview.OverviewFragment
 import com.google.android.material.navigation.NavigationView
@@ -88,9 +89,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        /*when (item.itemId) {
-
-        }*/
+        when (item.itemId) {
+            R.id.nav_add_ticket -> AddTicketFragment().show(supportFragmentManager, AddTicketFragment.TAG)
+        }
         return true
     }
 
