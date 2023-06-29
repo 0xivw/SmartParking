@@ -107,7 +107,7 @@ class OverviewFragment : Fragment(), PhotoGridAdapter.OnMapAction {
     }
 
     override fun onAction(longitude: Double, latitude: Double) {
-        val uri = Uri.parse("geo:$latitude,$longitude")
+        val uri = Uri.parse("google.navigation:q=$latitude,$longitude&model=1")
         val mapIntent = Intent(Intent.ACTION_VIEW, uri)
         mapIntent.setPackage("com.google.android.apps.maps")
 
