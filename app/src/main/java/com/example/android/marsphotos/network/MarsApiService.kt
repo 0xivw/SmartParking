@@ -29,7 +29,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.net.Authenticator
 
-private const val BASE_URL = "https://ad50-2402-800-61cb-e83b-8910-a1f3-3145-cc89.ngrok-free.app/"
+private const val BASE_URL = "https://91a6-2402-800-61cb-e83b-2996-e1ca-4778-a72b.ngrok-free.app/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -95,7 +95,7 @@ interface MarsApiService {
 
 
     @GET("get_month_ticket")
-    suspend fun getTicket(@Query("username") username: String?): Response<List<TicketData>>
+    suspend fun getTicket(@Query("username") username: String?): List<TicketData>
 }
 
 /**

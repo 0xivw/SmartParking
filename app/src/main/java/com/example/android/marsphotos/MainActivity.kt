@@ -41,10 +41,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.network.MarsApi
 import com.example.android.marsphotos.network.YourLocation
-import com.example.android.marsphotos.overview.AddTicketFragment
-import com.example.android.marsphotos.overview.LoginFragment
-import com.example.android.marsphotos.overview.MarsApiStatus
-import com.example.android.marsphotos.overview.OverviewFragment
+import com.example.android.marsphotos.overview.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
@@ -116,6 +113,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager,
                 AddTicketFragment.TAG
             )
+            R.id.nav_get_ticket -> supportFragmentManager.beginTransaction()
+                .replace(R.id.overviewFragment, GetTicketFragment())
+                .commit()
         }
         return true
     }
@@ -143,13 +143,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getCurrentLocation() {
         if (checkPermission()) {
             if (isLocationEnable()) {
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) {task ->
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if (location == null) {
                         Toast.makeText(this, "Null Received", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Get success", Toast.LENGTH_SHORT).show()
-                        Log.d("TAG", "getCurrentLocation: latityde " + location.latitude + " longtitude " + location.longitude)
+                        Log.d(
+                            "TAG",
+                            "getCurrentLocation: latityde " + location.latitude + " longtitude " + location.longitude
+                        )
                         longtitude = location.longitude
                         latitude = location.latitude
                     }
@@ -165,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun getYourLocation() : YourLocation {
+    fun getYourLocation(): YourLocation {
         return YourLocation(longtitude, latitude)
     }
 
@@ -214,9 +217,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun isLocationEnable() : Boolean {
-        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    private fun isLocationEnable(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
 }

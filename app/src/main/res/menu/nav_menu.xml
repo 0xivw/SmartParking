@@ -9,9 +9,14 @@
             android:title="Add ticket"/>
 
         <item
+            android:id="@+id/nav_get_ticket"
+            android:icon="@drawable/ic_add_ticket"
+            android:title="Get tickets"/>
+
+        <!--<item
             android:id="@+id/nav_change_password"
             android:icon="@drawable/ic_change_password"
-            android:title="Change password"/>
+            android:title="Change password"/>-->
 
         <item
             android:id="@+id/nav_log_out"

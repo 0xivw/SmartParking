@@ -9,6 +9,6 @@ data class TicketData(
     @Json(name = "type") val type: String?,
     @Json(name = "username") val username: String?,
     @Json(name = "parking_name") val parkingName: String?,
-    @Json(name = "time") val time: String?,
+    @Json(name = "duration") val time: String?,
     @Json(name = "cost") val cost: Long?
 )

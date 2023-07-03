@@ -17,6 +17,7 @@
 package com.example.android.marsphotos
 
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,16 +26,41 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.android.marsphotos.network.MarsPhoto
+import com.example.android.marsphotos.network.TicketData
 import com.example.android.marsphotos.overview.MarsApiStatus
 import com.example.android.marsphotos.overview.PhotoGridAdapter
+import com.example.android.marsphotos.overview.TicketGridAdapter
 
 /**
  * Updates the data shown in the [RecyclerView].
  */
+
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsPhoto>?) {
-    val adapter = recyclerView.adapter as PhotoGridAdapter
-    adapter.submitList(data)
+fun<T> bindRecyclerView(recyclerView: RecyclerView, data: List<T>?) {
+    if (data != null) {
+        if (data[0] is MarsPhoto) {
+            Log.d("TAG", "bindRecyclerView:rrrrr over ")
+            val listData = data?.map { item ->
+                when (item) {
+                    is MarsPhoto -> item
+                    else -> null
+                }
+            } ?: emptyList()
+            val adapter = recyclerView.adapter as PhotoGridAdapter
+            adapter.submitList(listData)
+        } else if (data[0] is TicketData) {
+            Log.d("TAG", "bindRecyclerView: ticket")
+            val listData = data?.map { item ->
+                when (item) {
+                    is TicketData -> item
+                    else -> null
+                }
+            } ?: emptyList()
+            val adapter = recyclerView.adapter as TicketGridAdapter
+            adapter.submitList(listData)
+        }
+    }
+
 }
 
 /**
