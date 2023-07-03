@@ -116,6 +116,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_get_ticket -> supportFragmentManager.beginTransaction()
                 .replace(R.id.overviewFragment, GetTicketFragment())
                 .commit()
+            R.id.nav_log_out ->
+            {
+                Constant.JWT_TOKEN = null
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.overviewFragment, OverviewFragment.newInstance(false, null))
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
         return true
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.marsphotos.Constant
 import com.example.android.marsphotos.network.MarsApi
 import com.example.android.marsphotos.network.MarsPhoto
 import com.example.android.marsphotos.network.TicketData
@@ -27,7 +28,7 @@ class AllTicketViewModel : ViewModel() {
         Log.d("TAG", "get Ticket xxxxxxxxxxxxx: ")
         viewModelScope.launch {
             try {
-                _tickets.value = MarsApi.retrofitService.getTicket("doanh")
+                _tickets.value = MarsApi.retrofitService.getTicket(Constant.USERNAME)
                 Log.d("TAG", "getMarsPhotos: "+ tickets.value)
             } catch (e: java.lang.Exception) {
                 Log.d("TAG", "send ticket : hhuhuhu " + e)

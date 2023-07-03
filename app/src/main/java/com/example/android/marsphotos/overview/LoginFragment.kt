@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.marsphotos.Constant
 import com.example.android.marsphotos.MainActivity
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.databinding.FragmentLoginBinding
@@ -39,7 +40,7 @@ class LoginFragment : Fragment() {
         /* observer = */
         { success ->
             if (success) {
-                val overviewFragment = OverviewFragment.newInstance(true, viewModel.account.value.toString())
+                val overviewFragment = OverviewFragment.newInstance(true, Constant.USERNAME)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.overviewFragment, overviewFragment)
                     .addToBackStack(null)

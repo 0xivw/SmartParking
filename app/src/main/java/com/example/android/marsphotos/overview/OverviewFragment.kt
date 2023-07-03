@@ -101,6 +101,8 @@ class OverviewFragment : Fragment(), PhotoGridAdapter.OnMapAction {
         if (isLoginSuccess == true) {
             (activity as MainActivity).changeHeader(true, headerName, false)
             (activity as MainActivity).setLeftIcon(context?.let { getDrawable(it, R.drawable.ic_menu) })
+        } else {
+            (activity as MainActivity).changeHeader(false, getString(R.string.app_name), true)
         }
 
         return binding.root

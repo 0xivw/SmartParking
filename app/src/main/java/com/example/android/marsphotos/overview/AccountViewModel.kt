@@ -53,6 +53,7 @@ class AccountViewModel : ViewModel() {
                     Log.d("TAG", "onPressButton: hihihihih " + jwt?.token)
                     if (status.isSuccessful) {
                         Toast.makeText(context, "Login successfully", Toast.LENGTH_SHORT).show()
+                        Constant.USERNAME = user
                         isLoginSuccess.value = true
                     } else {
                         Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
