@@ -47,6 +47,7 @@ fun<T> bindRecyclerView(recyclerView: RecyclerView, data: List<T>?) {
                 }
             } ?: emptyList()
             val adapter = recyclerView.adapter as PhotoGridAdapter
+            Log.d("TAG", "bindRecyclerView: xxxxxxxxx " + (listData[0]?.distance ?: 0))
             adapter.submitList(listData)
         } else if (data[0] is TicketData) {
             Log.d("TAG", "bindRecyclerView: ticket")

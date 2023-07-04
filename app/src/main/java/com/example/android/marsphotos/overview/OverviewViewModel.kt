@@ -77,6 +77,7 @@ class OverviewViewModel : ViewModel() {
             _status.value = MarsApiStatus.LOADING
             try {
                 _photos.value = MarsApi.retrofitService.getNearLocation(longtitude, latitude)
+                Log.d("TAG", "getNearLocation: " + _photos.value)
                 _status.value = MarsApiStatus.DONE
             } catch (e: Exception) {
                 Log.d("TAG", "getNearLocation: 28-06 huhhuhuhu " + e)

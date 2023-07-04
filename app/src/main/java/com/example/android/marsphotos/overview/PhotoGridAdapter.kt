@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos.overview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -41,6 +42,7 @@ class PhotoGridAdapter(private val itemClickListener: OnMapAction):
     ) : RecyclerView.ViewHolder(binding.root) {
         var mapMe : ImageView = binding.imvMap
         fun bind(marsPhoto: MarsPhoto) {
+            Log.d("TAG", "bind: distance " + marsPhoto.distance)
             binding.parking = marsPhoto
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -56,7 +58,7 @@ class PhotoGridAdapter(private val itemClickListener: OnMapAction):
      */
     companion object DiffCallback : DiffUtil.ItemCallback<MarsPhoto>() {
         override fun areItemsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
-            return oldItem.address == newItem.address
+            return oldItem.distance == newItem.distance
         }
 
         override fun areContentsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
