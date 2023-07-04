@@ -2,6 +2,7 @@ package com.example.android.marsphotos.overview
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,11 @@ class AddTicketFragment : DialogFragment() {
         val parkingName = binding.editTextTextPersonName.text.toString()
         val time = binding.editTextTextPersonName2.text.toString()
         val ticketModel  = TicketData(name, license, type, userName, parkingName, time, null)
-        context?.let { viewModel.addTicket(it, ticketModel) }
+        context?.let {
+            viewModel.addTicket(it, ticketModel)
+        }
+        viewModel.cost.observe(this) { newData ->
+            binding.tvCost.text = newData.toString()
+        }
     }
 }

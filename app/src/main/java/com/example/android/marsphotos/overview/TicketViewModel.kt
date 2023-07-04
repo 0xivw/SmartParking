@@ -37,9 +37,9 @@ class TicketViewModel : ViewModel() {
     val time: MutableLiveData<String>
         get() = _time
 
-    private val _cost = MutableLiveData<Long>()
-    val cost: MutableLiveData<String>
-        get() = _time
+    private val _cost = MutableLiveData<Long?>()
+    val cost: MutableLiveData<Long?>
+        get() = _cost
 
     init {
 
@@ -53,6 +53,8 @@ class TicketViewModel : ViewModel() {
                     MarsApi.retrofitService.addTicket(ticketMode)
                 val jwt = status1.body()
                 if (status1.isSuccessful) {
+                    Log.d("TAG", "addTicket: " + status1.body()?.cost)
+                    _cost.value = status1.body()?.cost
                     Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT)
                         .show()
                 } else {
