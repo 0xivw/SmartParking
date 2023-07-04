@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,12 @@ class LoginFragment : Fragment() {
         val activity = requireActivity() // Get the activity associated with the fragment
         if (activity is MainActivity) {
             activity.changeHeader(true, null, false)
+            (activity as MainActivity).setLeftIcon(context?.let {
+                ContextCompat.getDrawable(
+                    it,
+                    R.drawable.ic_back
+                )
+            })
         }
         binding.textView3.setOnClickListener(View.OnClickListener { onLogin() })
         viewModel.isLoginSuccess.observe(
@@ -42,8 +49,8 @@ class LoginFragment : Fragment() {
             if (success) {
                 val overviewFragment = OverviewFragment.newInstance(true, Constant.USERNAME)
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.overviewFragment, overviewFragment)
-                    .addToBackStack(null)
+                    .replace(R.id.overviewFragment, overviewFragment, "overView")
+                    .addToBackStack("overView")
                     .commit()
             }
         }

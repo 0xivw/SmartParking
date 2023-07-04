@@ -71,11 +71,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tvTitle = findViewById(R.id.tv_title)
         drawerLayout = findViewById(R.id.drawer_layout)
         //setSupportActionBar(toolbar)
-        val fragment = LoginFragment()
         imvLogin?.setOnClickListener(View.OnClickListener {
+            Log.d("TAG", "onCreate: adfadsfdafsafdsfads")
+            val fragment = LoginFragment()
             supportFragmentManager!!.beginTransaction()
-                .replace(R.id.overviewFragment, fragment)
-                .addToBackStack(null)
+                .replace(R.id.overviewFragment, fragment, "login")
+                .addToBackStack("login")
                 .commit()
         })
         navigationView = findViewById(R.id.nav_view)
@@ -83,7 +84,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         imvLeftButton.setOnClickListener(View.OnClickListener { view ->
             // Do some work here
-            drawerLayout.openDrawer(GravityCompat.START)
+            val fragment = supportFragmentManager.findFragmentByTag("overView")
+            if (fragment != null) {
+                if (fragment.isVisible())
+                    drawerLayout.openDrawer(GravityCompat.START)
+            }
         })
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -120,8 +125,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             {
                 Constant.JWT_TOKEN = null
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.overviewFragment, OverviewFragment.newInstance(false, null))
-                    .addToBackStack(null)
+                    .replace(R.id.overviewFragment, OverviewFragment.newInstance(false, null), "overView")
+                    .addToBackStack("overView")
                     .commit()
             }
         }

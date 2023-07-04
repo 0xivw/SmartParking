@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FEFEFE"
+        android:id="@+id/fragment_overview"
         tools:context="com.example.android.marsphotos.overview.OverViewFragment">
 
         <androidx.recyclerview.widget.RecyclerView
