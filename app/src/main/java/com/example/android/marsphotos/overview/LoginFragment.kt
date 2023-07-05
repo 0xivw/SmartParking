@@ -64,4 +64,5 @@ class LoginFragment : Fragment() {
         viewModel.onPressButton(context, account, password, isSignUp)
     }
 
+
 }

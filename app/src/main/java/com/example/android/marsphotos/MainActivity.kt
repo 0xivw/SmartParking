@@ -85,9 +85,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         imvLeftButton.setOnClickListener(View.OnClickListener { view ->
             // Do some work here
             val fragment = supportFragmentManager.findFragmentByTag("overView")
+            val loginFragment = supportFragmentManager.findFragmentByTag("login")
             if (fragment != null) {
                 if (fragment.isVisible())
                     drawerLayout.openDrawer(GravityCompat.START)
+            } else if (loginFragment != null) {
+                supportFragmentManager?.popBackStack()
             }
         })
 
