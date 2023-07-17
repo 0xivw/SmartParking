@@ -44,6 +44,7 @@ class LoginFragment : Fragment() {
             /* owner = */
             viewLifecycleOwner,
         )
+        
         /* observer = */
         { success ->
             if (success) {
@@ -52,6 +53,17 @@ class LoginFragment : Fragment() {
                     .replace(R.id.overviewFragment, overviewFragment, "overView")
                     .addToBackStack("overView")
                     .commit()
+            }
+        }
+        
+        binding.cbSignUp.setOnCheckedChangeListener { buttonView, isChecked  ->
+            if (isChecked) {
+                // CheckBox is checked
+                binding.textView2.text = "Sign up your \nAccount"
+                binding.textView3.text = "Sign up"
+            } else {
+                binding.textView2.text = "Login to your \nAccount"
+                binding.textView3.text = "Log in"
             }
         }
         return binding.root
