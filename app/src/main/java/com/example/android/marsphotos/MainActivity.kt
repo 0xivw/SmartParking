@@ -117,10 +117,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_add_ticket -> AddTicketFragment().show(
-                supportFragmentManager,
-                AddTicketFragment.TAG
-            )
+            R.id.nav_add_ticket -> supportFragmentManager.beginTransaction()
+                .replace(R.id.overviewFragment, AddTicketFragment())
+                .commit()
             R.id.nav_get_ticket -> supportFragmentManager.beginTransaction()
                 .replace(R.id.overviewFragment, GetTicketFragment())
                 .commit()

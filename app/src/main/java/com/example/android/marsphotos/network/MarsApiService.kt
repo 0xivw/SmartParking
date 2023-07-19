@@ -99,6 +99,9 @@ interface MarsApiService {
 
     @GET("check_month_ticket_user?")
     suspend fun getCost(@Body requestBody: TicketData): Response<TicketData>
+
+    @GET("find_ticket")
+    suspend fun findTicket(@Query("id_card") id: String?): Response<TicketData>
 }
 
 /**
