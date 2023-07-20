@@ -296,8 +296,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="qr_code_example" />
-                            <entry key="sourceFile" value="C:\Users\kunvt\Downloads\QR_Code_Example.svg" />
+                            <entry key="outputName" value="ic_launcher_background" />
+                            <entry key="sourceFile" value="C:\Users\kunvt\Downloads\Google_Maps_icon_(2020).svg" />
                           </map>
                         </option>
                       </PersistentState>

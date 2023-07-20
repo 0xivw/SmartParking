@@ -29,7 +29,9 @@ class AddTicketFragment : Fragment(), OnSetTime {
     private lateinit var binding: FragmentAddTicketBinding
     private var myInterface: OnSetTime? = null
 
-
+    fun getSharedViewModel(): TicketViewModel {
+        return viewModel
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +49,7 @@ class AddTicketFragment : Fragment(), OnSetTime {
         binding.imageView7.setOnClickListener { l ->
             Log.d(TAG, "onCreateView: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             activity?.let {
-                val fragment : MonthYearPickerDialog = MonthYearPickerDialog(Date())
+                val fragment : MonthYearPickerDialog = MonthYearPickerDialog(Date(), this)
                 fragment.setListener(myInterface)
                 fragment.show(
                     it.supportFragmentManager,

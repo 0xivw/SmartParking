@@ -29,7 +29,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.net.Authenticator
 
-private const val BASE_URL = "https://a0c7-2402-800-61cb-9fb3-785e-a969-8206-241b.ngrok-free.app/"
+private const val BASE_URL = "https://8bd6-2402-800-61cb-9fb3-c847-1531-9537-47ef.ngrok-free.app/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
