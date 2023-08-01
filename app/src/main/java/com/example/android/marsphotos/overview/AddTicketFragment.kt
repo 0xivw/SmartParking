@@ -45,6 +45,7 @@ class AddTicketFragment : Fragment(), OnSetTime {
             getTicket()}
         binding.btnCancel.setOnClickListener{l ->
             binding.imvQr.visibility = View.VISIBLE
+            binding.button.visibility = View.VISIBLE
         }
         binding.imageView7.setOnClickListener { l ->
             Log.d(TAG, "onCreateView: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
