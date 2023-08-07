@@ -3,6 +3,7 @@ package com.example.android.marsphotos.overview
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.android.marsphotos.Constant
 import com.example.android.marsphotos.R
 import com.example.android.marsphotos.databinding.FragmentAddTicketBinding
 import com.example.android.marsphotos.databinding.FragmentLoginBinding
@@ -44,8 +46,10 @@ class AddTicketFragment : Fragment(), OnSetTime {
         binding.btnOk.setOnClickListener { l -> //getObject()
             getTicket()}
         binding.btnCancel.setOnClickListener{l ->
-            binding.imvQr.visibility = View.VISIBLE
-            binding.button.visibility = View.VISIBLE
+            checkTicket()
+        }
+        binding.button.setOnClickListener { l ->
+            getObject()
         }
         binding.imageView7.setOnClickListener { l ->
             Log.d(TAG, "onCreateView: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -58,10 +62,34 @@ class AddTicketFragment : Fragment(), OnSetTime {
                 )
             }
         }
+        viewModel.paymentStatus.observe(
+            /* owner = */
+            viewLifecycleOwner,
+        )
+
+        /* observer = */
+        { success ->
+            if (TextUtils.equals(success, "true")) {
+                binding.imvQr.visibility = View.VISIBLE
+                binding.button.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.findStatus.observe(
+            /* owner = */
+            viewLifecycleOwner,
+        )
+
+        /* observer = */
+        { success ->
+            if (success) {
+                binding.btnCancel.visibility = View.VISIBLE
+            }
+        }
         return binding.root
     }
     fun getObject(){
-        val name = binding.tvLicense.text.toString()
+        val name = binding.edtLicense.text.toString()
         val license = binding.edtType.text.toString()
         val type = binding.edtColor.text.toString()
         val userName = binding.edtImage.text.toString()
@@ -70,9 +98,6 @@ class AddTicketFragment : Fragment(), OnSetTime {
         val ticketModel  = TicketData(name, license, type, userName, parkingName, time, null)
         context?.let {
             viewModel.addTicket(it, ticketModel)
-        }
-        viewModel.cost.observe(this) { newData ->
-            binding.tvCost.text = newData.toString()
         }
     }
 
@@ -90,6 +115,13 @@ class AddTicketFragment : Fragment(), OnSetTime {
         viewModel.type.observe(this) {newData ->
             binding.edtType.text = newData.toString()
         }*/
+    }
+
+    fun checkTicket() {
+        val id = binding.edtLicense.text.toString()
+        context?.let {
+            viewModel.checkPayment(it, id)
+        }
     }
 
     override fun setValue(year: Int, month: Int) {

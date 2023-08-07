@@ -136,6 +136,7 @@
             android:layout_height="wrap_content"
             android:text="Payment"
             android:textSize="16dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/btn_ok"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

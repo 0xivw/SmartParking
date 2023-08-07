@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.network.MarsApi
+import com.example.android.marsphotos.network.PaymentData
 import com.example.android.marsphotos.network.TicketData
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -41,6 +42,15 @@ class TicketViewModel : ViewModel() {
     val cost: MutableLiveData<Long?>
         get() = _cost
 
+
+    private val _paymentStatus = MutableLiveData<String?>()
+    val paymentStatus: MutableLiveData<String?>
+        get() = _paymentStatus
+
+    private val _findStatus = MutableLiveData<Boolean>()
+    val findStatus: MutableLiveData<Boolean>
+        get() = _findStatus
+
     init {
 
     }
@@ -55,14 +65,13 @@ class TicketViewModel : ViewModel() {
                 if (status1.isSuccessful) {
                     Log.d("TAG", "addTicket: " + status1.body()?.cost)
                     _cost.value = status1.body()?.cost
-                    Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(context, "Payment successfully", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "xxxLogin failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Payment failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: java.lang.Exception) {
                 Log.d("TAG", "send ticket : hhuhuhu " + e)
-                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Payment failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -81,15 +90,41 @@ class TicketViewModel : ViewModel() {
                     _parkingName.value = status1.body()?.parkingName
                     _username.value = status1.body()?.username
                     //_time.value = status1.body()?.time
+                    _findStatus.value = true
 
-                    Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Find successfully", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    Toast.makeText(context, "xxxLogin failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Not found ticket", Toast.LENGTH_SHORT).show()
+                    _findStatus.value = false
                 }
             } catch (e: java.lang.Exception) {
                 Log.d("TAG", "send ticket : hhuhuhu " + e)
-                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Not found ticket", Toast.LENGTH_SHORT).show()
+                _findStatus.value = false
+            }
+        }
+    }
+
+    fun checkPayment(context: Context, id : String) {
+        viewModelScope.launch {
+            try {
+                Log.d("TAG", "addTicket: " + _type.value)
+                val status1: Response<PaymentData> =
+                    MarsApi.retrofitService.checkPayment(id)
+
+                if (status1.isSuccessful) {
+                    _paymentStatus.value = "true"
+                } else {
+                    _paymentStatus.value = "false"
+                    Toast.makeText(context, "Ticket existed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } catch (e: java.lang.Exception) {
+                Log.d("TAG", "send ticket : hhuhuhu " + e)
+                _paymentStatus.value = "false"
+                Toast.makeText(context, "Ticket existed", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
