@@ -21,15 +21,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
-import java.net.Authenticator
 
-private const val BASE_URL = "https://f9e1-2402-800-61cb-e5da-60cf-d8c8-e474-9f1c.ngrok-free.app/"
+private const val BASE_URL = "https://bc49-2402-800-61cb-e5da-c011-eecf-af9d-b9d9.ngrok-free.app/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -63,18 +60,18 @@ private val retrofit = Retrofit.Builder()
  */
 interface MarsApiService {
     /**
-     * Returns a [List] of [MarsPhoto] and this method can be called from a Coroutine.
+     * Returns a [List] of [ParkingInfo] and this method can be called from a Coroutine.
      * The @GET annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
     @GET("get-all-parking")
-    suspend fun getPhotos(): List<MarsPhoto>
+    suspend fun getPhotos(): List<ParkingInfo>
 
     @GET("get-sort-distance")
     suspend fun getNearLocation(
         @Query("longtitude") longtitude: Double?,
         @Query("latitude") latitude: Double?
-    ): List<MarsPhoto>
+    ): List<ParkingInfo>
 
     @FormUrlEncoded
     @POST("login-user?")

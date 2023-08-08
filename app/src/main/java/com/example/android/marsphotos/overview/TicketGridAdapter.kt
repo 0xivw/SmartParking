@@ -2,13 +2,11 @@ package com.example.android.marsphotos.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.marsphotos.databinding.GridViewItemBinding
 import com.example.android.marsphotos.databinding.GridViewTicketBinding
-import com.example.android.marsphotos.network.MarsPhoto
+import com.example.android.marsphotos.network.ParkingInfo
 import com.example.android.marsphotos.network.TicketData
 
 class TicketGridAdapter():
@@ -16,7 +14,7 @@ class TicketGridAdapter():
 
     /**
      * The MarsPhotosViewHolder constructor takes the binding variable from the associated
-     * GridViewItem, which nicely gives it access to the full [MarsPhoto] information.
+     * GridViewItem, which nicely gives it access to the full [ParkingInfo] information.
      */
     class MarsPhotosViewHolder(
         private var binding: GridViewTicketBinding
@@ -32,7 +30,7 @@ class TicketGridAdapter():
 
     /**
      * Allows the RecyclerView to determine which items have changed when the [List] of
-     * [MarsPhoto] has been updated.
+     * [ParkingInfo] has been updated.
      */
     companion object DiffCallback : DiffUtil.ItemCallback<TicketData>() {
         override fun areItemsTheSame(oldItem: TicketData, newItem: TicketData): Boolean {

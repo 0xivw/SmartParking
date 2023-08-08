@@ -25,7 +25,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.android.marsphotos.network.MarsPhoto
+import com.example.android.marsphotos.network.ParkingInfo
 import com.example.android.marsphotos.network.TicketData
 import com.example.android.marsphotos.overview.MarsApiStatus
 import com.example.android.marsphotos.overview.PhotoGridAdapter
@@ -38,11 +38,11 @@ import com.example.android.marsphotos.overview.TicketGridAdapter
 @BindingAdapter("listData")
 fun<T> bindRecyclerView(recyclerView: RecyclerView, data: List<T>?) {
     if (data != null) {
-        if (data[0] is MarsPhoto) {
+        if (data[0] is ParkingInfo) {
             Log.d("TAG", "bindRecyclerView:rrrrr over ")
             val listData = data?.map { item ->
                 when (item) {
-                    is MarsPhoto -> item
+                    is ParkingInfo -> item
                     else -> null
                 }
             } ?: emptyList()

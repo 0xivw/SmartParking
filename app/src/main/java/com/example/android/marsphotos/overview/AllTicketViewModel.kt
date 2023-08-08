@@ -1,18 +1,14 @@
 package com.example.android.marsphotos.overview
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.Constant
 import com.example.android.marsphotos.network.MarsApi
-import com.example.android.marsphotos.network.MarsPhoto
 import com.example.android.marsphotos.network.TicketData
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class AllTicketViewModel : ViewModel() {
     private val _tickets = MutableLiveData<List<TicketData>>()

@@ -24,24 +24,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsphotos.databinding.GridViewItemBinding
-import com.example.android.marsphotos.network.MarsPhoto
+import com.example.android.marsphotos.network.ParkingInfo
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
 class PhotoGridAdapter(private val itemClickListener: OnMapAction):
-    ListAdapter<MarsPhoto, PhotoGridAdapter.MarsPhotosViewHolder>(DiffCallback) {
+    ListAdapter<ParkingInfo, PhotoGridAdapter.MarsPhotosViewHolder>(DiffCallback) {
 
     /**
      * The MarsPhotosViewHolder constructor takes the binding variable from the associated
-     * GridViewItem, which nicely gives it access to the full [MarsPhoto] information.
+     * GridViewItem, which nicely gives it access to the full [ParkingInfo] information.
      */
     class MarsPhotosViewHolder(
         private var binding: GridViewItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         var mapMe : ImageView = binding.imvMap
-        fun bind(marsPhoto: MarsPhoto) {
+        fun bind(marsPhoto: ParkingInfo) {
             Log.d("TAG", "bind: distance " + marsPhoto.distance)
             binding.parking = marsPhoto
             // This is important, because it forces the data binding to execute immediately,
@@ -54,14 +54,14 @@ class PhotoGridAdapter(private val itemClickListener: OnMapAction):
 
     /**
      * Allows the RecyclerView to determine which items have changed when the [List] of
-     * [MarsPhoto] has been updated.
+     * [ParkingInfo] has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<MarsPhoto>() {
-        override fun areItemsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<ParkingInfo>() {
+        override fun areItemsTheSame(oldItem: ParkingInfo, newItem: ParkingInfo): Boolean {
             return oldItem.distance == newItem.distance
         }
 
-        override fun areContentsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
+        override fun areContentsTheSame(oldItem: ParkingInfo, newItem: ParkingInfo): Boolean {
             return oldItem.name == newItem.name
         }
     }

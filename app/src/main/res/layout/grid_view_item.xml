@@ -24,7 +24,7 @@
 
         <variable
             name="parking"
-            type="com.example.android.marsphotos.network.MarsPhoto" />
+            type="com.example.android.marsphotos.network.ParkingInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

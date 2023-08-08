@@ -22,7 +22,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.network.MarsApi
-import com.example.android.marsphotos.network.MarsPhoto
+import com.example.android.marsphotos.network.ParkingInfo
 import kotlinx.coroutines.launch
 
 enum class MarsApiStatus { LOADING, ERROR, DONE }
@@ -40,10 +40,10 @@ class OverviewViewModel : ViewModel() {
 
     // Internally, we use a MutableLiveData, because we will be updating the List of MarsPhoto
     // with new values
-    private val _photos = MutableLiveData<List<MarsPhoto>>()
+    private val _photos = MutableLiveData<List<ParkingInfo>>()
 
     // The external LiveData interface to the property is immutable, so only this class can modify
-    val photos: LiveData<List<MarsPhoto>> = _photos
+    val photos: LiveData<List<ParkingInfo>> = _photos
 
     /**
      * Call getMarsPhotos() on init so we can display status immediately.
@@ -54,7 +54,7 @@ class OverviewViewModel : ViewModel() {
 
     /**
      * Gets Mars photos information from the Mars API Retrofit service and updates the
-     * [MarsPhoto] [List] [LiveData].
+     * [ParkingInfo] [List] [LiveData].
      */
     private fun getMarsPhotos() {
 
