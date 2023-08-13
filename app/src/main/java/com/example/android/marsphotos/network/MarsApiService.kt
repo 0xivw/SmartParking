@@ -26,7 +26,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
-private const val BASE_URL = "https://bc49-2402-800-61cb-e5da-c011-eecf-af9d-b9d9.ngrok-free.app/"
+private const val BASE_URL = "https://smartparking.website/be/"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for

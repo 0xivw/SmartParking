@@ -143,7 +143,7 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_google_map" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
